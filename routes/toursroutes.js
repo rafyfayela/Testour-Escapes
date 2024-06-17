@@ -4,8 +4,13 @@ const router = express.Router() ;
 
 // router.param('id' , tourController.checkid) ; 
 
-router.route('/toptours').get(tourController.ourtoptours , tourController.getalltours) ; 
+router
+    .route('/toptours')
+    .get(tourController.ourtoptours , tourController.getalltours) ; 
 
+router
+    .route('/tourstats')
+    .get(tourController.gettourstats) ;
 
 router
     .route('/')

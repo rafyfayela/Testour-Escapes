@@ -1,5 +1,15 @@
 const dotenv = require('dotenv') ; 
 dotenv.config({path:'./config.env'}) ;
+
+
+
+process.on('uncaughtException' , err=>{
+    console.log('UNCAUGHT EXCEPTION !!! SHUTTING DOWN ... ')
+    console.log(err.name , err.message) ;
+    process.exit(1) ;
+})
+
+
 const app = require('./app') ;
 const mongoose = require('mongoose');
 const DB = process.env.DATABASE_LOCAL ; 
@@ -19,10 +29,10 @@ const server = app.listen( port , '127.0.0.1' ,  () => {
 
 
 process.on('uhnhandledRejection',err =>{
-console.log(err.name , err.message) ; 
-console.log('UNHANDLED REJECTION !!! SHUTTING DOWN ... ')
-server.close(()=>{
-    process.exit(1) ;
-}) ; 
- 
+    console.log('UNCAUGHT EXCEPTION !!! SHUTTING DOWN ... ')
+    console.log(err.name , err.message) ; 
+    server.close(()=>{
+        process.exit(1) ;
+    }) ; 
 });
+

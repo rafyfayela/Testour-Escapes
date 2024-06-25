@@ -1,9 +1,17 @@
-exports.getallusers = (req,res) => {
-    res.status(500).json({
-        status:'error',
-        message:'route is not defined yet ! '
+const User = require('../models/userModel') ;
+const catchAsync = require('../utils/catchAsync') ; 
+
+
+exports.getallusers = catchAsync( async (req,res) => {
+    const users = await User.find() ; 
+    res.status(200).json({
+    status : 'success',
+    result : users.length , 
+    data : {
+        users
+    }
     })
-}
+}) ; 
 
 exports.createuser = (req,res)  =>{
     res.status(500).json({

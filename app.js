@@ -4,6 +4,7 @@ const morgan = require('morgan') ;
 const helmet = require('helmet') ; 
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
+const hpp = require('hpp'); 
 const rateLimit = require('express-rate-limit') ; 
 const AppError = require('./utils/appError') ; 
 const globalErrorHandler = require('./controllers/errorController') ; 
@@ -48,6 +49,14 @@ app.use(mongoSanitize()) ;
 
 // data sanitization xss : 
 app.use(xss()); 
+
+// prevent parameter pollution : 
+//  duplicate in url
+
+app.use(hpp({
+    whitelist : ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price']
+})) ; 
+
 // 2 : Routes 
 
 const tourRouter = require('./routes/toursroutes') ; 

@@ -4,15 +4,22 @@ const morgan = require('morgan') ;
 const rateLimit = require('express-rate-limit') ; 
 const AppError = require('./utils/appError') ; 
 const globalErrorHandler = require('./controllers/errorController') ; 
+const helmet = require('helmet') ; 
 
 
 
 // 1) middlewares :  ------------------------------------------------------------------------------------
+// security http header :
+app.use(helmet()) ;
+
+// logging dev mod : 
 console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'developement') {
 app.use(morgan('dev')) ; 
 }
 
+
+// limit request 
 const limiter = rateLimit({
     max : 150 , 
     windowMs : 60*60*1000 , 
@@ -21,12 +28,14 @@ const limiter = rateLimit({
 
 app.use('/api',limiter); 
 
+
+//  body parser , reading data from body into req.body
 app.use(express.json()) ; 
+// serving static files 
 app.use(express.static('./public/'));
-app.use((req,res,next)=>{
-    console.log('hello from the middleware!');
-    next(); 
-})
+
+// test middleware 
+
 app.use((req,res,next)=>{
     req.requesttime = new Date().toISOString() ; 
     next() ;

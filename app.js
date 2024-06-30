@@ -61,11 +61,13 @@ app.use(hpp({
 
 const tourRouter = require('./routes/toursroutes') ; 
 const userRouter = require('./routes/usersroutes') ; 
+const reviewRouter = require('./routes/reviewroutes'); 
 
 
 
 app.use('/api/v1/tours' , tourRouter);
 app.use('/api/v1/users' , userRouter);
+app.use('/api/v1/reviews' , reviewRouter);
 
 app.all('*',(req,res,next)=>{
 

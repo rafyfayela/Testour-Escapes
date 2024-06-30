@@ -8,10 +8,10 @@ const router = express.Router() ;
 router
     .route('/')
     .get(authController.protect ,tourController.getalltours)
-    .post(tourController.createtour);
+    .post(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') ,  tourController.createtour);
 router
     .route('/toptours')
-    .get(tourController.ourtoptours , tourController.getalltours) ; 
+    .get(tourController.ourtoptours ,  tourController.getalltours) ; 
 
 router
     .route('/tourstats')
@@ -24,7 +24,7 @@ router
 router
     .route('/:id')
     .get(tourController.gettour)
-    .patch(tourController.updatetour)
-    .delete(authController.protect ,authController.restrictTo('Admin','Staff') , tourController.deletetour);
+    .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.updatetour)
+    .delete(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.deletetour);
 
     module.exports = router ; 

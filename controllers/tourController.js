@@ -57,7 +57,11 @@ exports.getalltours = catchAsync (async (req,res,next)=>{
 }) ; 
 
 exports.gettour = catchAsync (async (req,res,next)=>{
-        const tour = await Tour.findById(req.params.id) ; 
+        const tour = await Tour.findById(req.params.id)
+        .populate({path:'owner',select :'name'})
+        .populate({path: 'guides' , select :'name phone'}) ; 
+
+
         if (!tour) {
             return next(new AppError('No tour found with that ID', 404));
         }

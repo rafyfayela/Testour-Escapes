@@ -2,6 +2,7 @@ const crypto = require('crypto') ;
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs') ; 
+const telephone = require('libphonenumber-js');
 const userSchema = new mongoose.Schema({
     name : {
         type : String,
@@ -13,6 +14,11 @@ const userSchema = new mongoose.Schema({
         required : [true , 'Email is required !'] , 
         lowercase : true ,
         validate : [validator.isEmail , 'Please use a valid Email ! ']
+    },
+    phone: {
+        type: String ,
+        required : true ,
+        validate: [telephone.isValidPhoneNumber , 'Please use a valid phone ! '] ,
     },
     role : {
         type : String, 

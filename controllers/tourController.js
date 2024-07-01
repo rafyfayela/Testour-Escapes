@@ -4,6 +4,7 @@ const { join } = require('path');
 const APIfeatures = require('../utils/apiFeatures') ; 
 const catchAsync = require('../utils/catchAsync') ; 
 const AppError = require('../utils/appError') ; 
+const factory = require('./handlerFactory') ;
 
 
 // const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json')) ; 
@@ -74,48 +75,9 @@ exports.gettour = catchAsync (async (req,res,next)=>{
 });
 
 
-exports.createtour = catchAsync (async (req,res,next)=>{
- 
-            const newtour = await Tour.create(req.body) ;
-            res.status(201).json({
-            status : 'success',
-            data : {
-                tour : newtour 
-            }
-            }) ; 
-    }) ; 
-
-
-exports.updatetour = catchAsync (async (req,res,next) => {
-        const tour = await Tour.findByIdAndUpdate(req.params.id , req.body , {
-            new : true, 
-            runValidators : true 
-        }) ;
-
-        if (!tour) {
-            return next(new AppError('No tour found with that ID', 404));
-        }
-
-        res.status(201).json({
-        status : 'success',
-        data : {
-            tour 
-        }
-        }) 
-});
-
-exports.deletetour = catchAsync (async (req,res,next) => {
-   
-        const tour = await Tour.findByIdAndDelete(req.params.id) ;
-        if (!tour) {
-            return next(new AppError('No tour found with that ID', 404));
-        }
-        res.status(204).json({
-        status : 'success',
-        data : null 
-        })
-   
-});
+exports.createtour = factory.createOne(Tour) ;
+exports.updatetour = factory.updateOne(Tour) ;
+exports.deletetour = factory.deleteOne(Tour) ;
 
 
 exports.gettourstats = catchAsync (async (req, res,next) => {

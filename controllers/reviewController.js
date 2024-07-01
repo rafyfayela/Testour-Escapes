@@ -17,6 +17,7 @@ exports.setTourUserIds = (req,res,next)=>{
 exports.deletereview = factory.deleteOne(Review) ; 
 exports.updatreview = factory.updateOne(Review) ;
 exports.createreview = factory.createOne(Review) ;
+exports.getreview = factory.getOne(Review) ; 
 
 
 exports.getallreviews = catchAsync (async (req,res,next)=>{

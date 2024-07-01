@@ -56,25 +56,11 @@ exports.getalltours = catchAsync (async (req,res,next)=>{
     
     
 }) ; 
-
-exports.gettour = catchAsync (async (req,res,next)=>{
-        const tour = await Tour.findById(req.params.id).populate('reviews')
-        .populate({path:'owner',select :'name'})
-        .populate({path: 'guides' , select :'name phone'}) ; 
-
-
-        if (!tour) {
-            return next(new AppError('No tour found with that ID', 404));
-        }
-        res.status(200).json({
-            status : 'success',
-            data : {
-                tour
-            }
-            })
-});
-
-
+exports.gettour = factory.getOne(Tour, [
+    { path: 'reviews' },
+    { path: 'owner', select: 'name' },
+    { path: 'guides', select: 'name phone' }
+])
 exports.createtour = factory.createOne(Tour) ;
 exports.updatetour = factory.updateOne(Tour) ;
 exports.deletetour = factory.deleteOne(Tour) ;

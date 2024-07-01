@@ -13,8 +13,9 @@ router
     
 router
  .route('/:id')
+    .get(reviewController.getreview)
     .delete(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , reviewController.deletereview)
-    .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , reviewController.updatreview)
+    .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , reviewController.updatreview) ; 
 
 
 module.exports = router  ; 

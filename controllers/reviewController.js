@@ -7,7 +7,7 @@ const AppError = require('../utils/appError') ;
 
 
 exports.getallreviews = catchAsync (async (req,res,next)=>{
-     
+
     const review = await Review.find() ; 
     res.status(200).json({
     status : 'success',
@@ -22,7 +22,8 @@ exports.getallreviews = catchAsync (async (req,res,next)=>{
 
 
 exports.createreview = catchAsync (async (req,res,next)=>{
- 
+    req.body.tour = req.params.tourId ; 
+    req.body.user = req.user.id ; 
     const newreview = await Review.create(req.body) ;
     res.status(201).json({
     status : 'success',

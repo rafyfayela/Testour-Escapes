@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         type : String ,
         required : [true , 'Please provide us with a password !'] ,
         minlength : 8 , 
-         
+        select : false ,
     },
     passwordConfirm : {
         type : String , 
@@ -41,7 +41,8 @@ const userSchema = new mongoose.Schema({
             } , 
             message : 'Passwords are not the same! '
             
-        }
+        },
+        select : false 
     },
     photo : {
         type : String , 

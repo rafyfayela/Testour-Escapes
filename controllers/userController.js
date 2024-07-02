@@ -45,18 +45,6 @@ exports.deleteMe = catchAsync(async(req,res,next)=>{
     })
 }) ; 
 
-
-exports.getallusers = catchAsync( async (req,res) => {
-    const users = await User.find() ; 
-    res.status(200).json({
-    status : 'success',
-    result : users.length , 
-    data : {
-        users
-    }
-    })
-}) ; 
-
 exports.createuser = (req,res)  =>{
     res.status(500).json({
         status:'error',
@@ -64,7 +52,7 @@ exports.createuser = (req,res)  =>{
     })
 }
 
-
+exports.getallusers = factory.getAll(User); 
 exports.getuser= factory.getOne(User)
 exports.updateuser = factory.updateOne(User) ; 
 exports.deleteuser = factory.deleteOne(User) ; 

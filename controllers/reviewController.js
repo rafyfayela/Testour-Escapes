@@ -18,21 +18,6 @@ exports.deletereview = factory.deleteOne(Review) ;
 exports.updatreview = factory.updateOne(Review) ;
 exports.createreview = factory.createOne(Review) ;
 exports.getreview = factory.getOne(Review) ; 
-
-
-exports.getallreviews = catchAsync (async (req,res,next)=>{
-    let filter = {} ; 
-    if(req.params.tourId) filter = {tour: req.params.tourId} ;
-    const review = await Review.find(filter) ; 
-    res.status(200).json({
-    status : 'success',
-    result : review.length , 
-    data : {
-        review
-    }
-    })
-
-
-}) ; 
+exports.getallreviews = factory.getAll(Review) ; 
 
 

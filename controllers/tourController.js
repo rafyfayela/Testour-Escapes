@@ -38,24 +38,7 @@ next() ;
 };
 
 
-exports.getalltours = catchAsync (async (req,res,next)=>{
-     
-            const features = new APIfeatures(Tour.find() , req.query)
-            .filter()
-            .sort()
-            .fields()
-            .pagination() ; 
-            const tours = await features.query ; 
-            res.status(200).json({
-            status : 'success',
-            result : tours.length , 
-            data : {
-                tours
-            }
-            })
-    
-    
-}) ; 
+exports.getalltours = factory.getAll(Tour) ;  
 exports.gettour = factory.getOne(Tour, [
     { path: 'reviews' },
     { path: 'owner', select: 'name' },

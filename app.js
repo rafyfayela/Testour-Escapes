@@ -1,5 +1,6 @@
 const express = require('express') ;
 const app = express()  ; 
+const path = require('path') ; 
 const morgan = require('morgan') ; 
 const helmet = require('helmet') ; 
 const mongoSanitize = require('express-mongo-sanitize')
@@ -35,7 +36,7 @@ app.use('/api',limiter);
 //  body parser , reading data from body into req.body
 app.use(express.json()) ; 
 // serving static files 
-app.use(express.static('./public/'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // test middleware 
 

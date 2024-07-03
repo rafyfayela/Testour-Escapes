@@ -8,7 +8,7 @@ const router = express.Router() ;
 
 router
     .route('/')
-    .get(authController.protect ,tourController.getalltours)
+    .get( tourController.getalltours)
     .post(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff','Guide') ,  tourController.createtour);
 router
     .route('/toptours')

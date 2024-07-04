@@ -118,6 +118,11 @@ const tourSchema = new mongoose.Schema ({
       toObject: { virtuals: true }
     } 
 )
+
+//  indexes : 
+
+tourSchema.index({price:1 , ratingsAverage : -1 }) ; 
+tourSchema.index({slug:1}) ; 
 // Virtual properties --------------------------------------------------------------------
 
 

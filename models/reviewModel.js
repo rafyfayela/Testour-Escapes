@@ -59,15 +59,37 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
         }}
     ]);
     console.log(stats);
-
-    await Tour.findByIdAndUpdate(tourId , {
-        ratingsQuantity : stats[0].nRating ,
-        ratingsAverage : stats[0].avgRating
-    })
+        if (stats.length > 0) {
+            await Tour.findByIdAndUpdate(tourId , {
+                ratingsQuantity : stats[0].nRating ,
+                ratingsAverage : stats[0].avgRating
+            })
+        }
+        else {
+            await Tour.findByIdAndUpdate(tourId , {
+                ratingsQuantity : 0 ,
+                ratingsAverage : 4.5
+                })
+        }
 };
 
-reviewSchema.post('save', function () {
+reviewSchema.post('save', function() {
+    // this points to current review
     this.constructor.calcAverageRatings(this.tour);
-})
+  });
+  
+let docBeforeUpdate ; 
+
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+    docBeforeUpdate = await this.model.findOne(this.getQuery());
+    next();
+});
+
+reviewSchema.post(/^findOneAnd/, async function () {
+    if (docBeforeUpdate) {
+        await docBeforeUpdate.constructor.calcAverageRatings(docBeforeUpdate.tour);
+    }
+});
+
 const Review = mongoose.model("Review", reviewSchema)
 module.exports = Review ; 

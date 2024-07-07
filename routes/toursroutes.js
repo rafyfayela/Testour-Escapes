@@ -7,28 +7,31 @@ const router = express.Router() ;
 // router.param('id' , tourController.checkid) ; 
 
 router
-    .route('/')
-    .get( tourController.getalltours)
-    .post(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff','Guide') ,  tourController.createtour);
+        .route('/')
+            .get( tourController.getalltours)
+            .post(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff','Guide') ,  tourController.createtour);
 router
     .route('/toptours')
-    .get(tourController.ourtoptours ,  tourController.getalltours) ; 
+        .get(tourController.ourtoptours ,  tourController.getalltours) ; 
 
 router
     .route('/tourstats')
-    .get(tourController.gettourstats) ;
+        .get(tourController.gettourstats) ;
 
 router
     .route('/monthlyplan/:year')
-    .get(tourController.getmonthlyplan) ;     
+        .get(tourController.getmonthlyplan) ;     
 
 router
     .route('/:id')
-    .get(tourController.gettour)
-    .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.updatetour)
-    .delete(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.deletetour);
+        .get(tourController.gettour)
+        .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.updatetour)
+        .delete(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.deletetour);
 
 
+router
+    .route('/nearme/:distance/center/:latlng/unit/:unit')
+        .get(tourController.getToursWithin)
     // ------------------------------------------------------------------------------------------------------------------------
 
 router.use('/:tourId/reviews', reviewroutes )

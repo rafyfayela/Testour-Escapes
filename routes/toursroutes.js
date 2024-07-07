@@ -32,6 +32,9 @@ router
 router
     .route('/nearme/:distance/center/:latlng/unit/:unit')
         .get(tourController.getToursWithin)
+router
+    .route('/distance/:latlng/unit/:unit')
+        .get(tourController.getDistance) ;      
     // ------------------------------------------------------------------------------------------------------------------------
 
 router.use('/:tourId/reviews', reviewroutes )

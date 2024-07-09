@@ -25,7 +25,12 @@ router
 router
     .route('/:id')
         .get(tourController.gettour)
-        .patch(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.updatetour)
+        .patch(   authController.protect 
+                , authController.restrictTo('Owner', 'Admin' , 'Staff' )
+                , tourController.uploadTourImages 
+                , tourController.resizeTourPhoto 
+                , tourController.updatetour)
+
         .delete(authController.protect ,authController.restrictTo('Owner', 'Admin' , 'Staff') , tourController.deletetour);
 
 
